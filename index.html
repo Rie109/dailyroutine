@@ -278,6 +278,102 @@
       from { opacity: 0; transform: translateY(20px) scale(0.95); }
       to { opacity: 1; transform: translateY(0) scale(1); }
     }
+    /* Mobile-First Adjustments */
+    @media (max-width: 480px) {
+      body {
+        padding: 10px;
+      }
+
+      .container {
+        gap: 15px;
+        width: 100%;
+      }
+
+      .main-content {
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: 1.8em;
+        margin-bottom: 8px;
+      }
+
+      .day-nav {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .dayBtn {
+        padding: 12px;
+        font-size: 0.9em;
+      }
+
+      .task {
+        padding: 12px;
+        margin: 8px 0;
+        font-size: 0.9em;
+      }
+
+      .side-panel {
+        padding: 15px;
+      }
+
+      .side-panel h3 {
+        font-size: 1.1em;
+      }
+
+      .panel-header {
+        margin-bottom: 15px;
+      }
+
+      #current-time {
+        font-size: 0.9em;
+        margin-top: 8px;
+        display: block;
+        text-align: center;
+      }
+
+      .theme-toggle-btn {
+        font-size: 1.3em;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+      }
+
+      .timetable h2 {
+        font-size: 1.2em;
+        margin-bottom: 15px;
+      }
+
+      /* Disable hover effects on mobile */
+      .task:hover {
+        transform: none;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .day-nav {
+        grid-template-columns: 1fr;
+      }
+
+      .task {
+        font-size: 0.85em;
+      }
+
+      .side-panel {
+        padding: 12px;
+      }
+    }
+    .side-panel.collapsed {
+      height: 50px;
+      overflow: hidden;
+    }
+
+    .toggle-panel {
+      font-size: 1.4em;
+      padding: 8px;
+    }
   </style>
 </head>
 <body>
@@ -464,6 +560,18 @@
 
     setInterval(updateTime, 1000);
     updateTime();
+
+     // Mobile-Specific Enhancements
+    // Auto-collapse side panel on mobile
+    if (window.matchMedia("(max-width: 768px)").matches) {
+      document.querySelector('.side-panel').classList.add('collapsed');
+      document.querySelector('.toggle-panel').textContent = '►';
+    }
+
+    // Better touch targets
+    document.querySelectorAll('.dayBtn, .task').forEach(element => {
+      element.style.touchAction = 'manipulation';
+    });
   </script>
 </body>
 </html>
