@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>My Weekly Routine</title>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
   <style>
     /* Base Styles */
     * {
@@ -13,16 +13,15 @@
       padding: 0;
       box-sizing: border-box;
     }
-
     body {
       font-family: 'Space Grotesk', sans-serif;
       color: #333;
-      background-color: #f0f0f0;
+      background-color: #121212;
       min-height: 100vh;
       padding: 20px;
+      overflow-x: hidden;
     }
-
-    /* Background Effects */
+    /* Background and Overlay */
     .bg-img {
       position: fixed;
       top: 0;
@@ -31,19 +30,18 @@
       height: 100%;
       object-fit: cover;
       z-index: -2;
+      filter: brightness(0.6);
     }
-
     .overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: radial-gradient(circle, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 100%);
+      background: rgba(0, 0, 0, 0.4);
       z-index: -1;
     }
-
-    /* Main Container */
+    /* Main Container with Fade In */
     .container {
       display: flex;
       gap: 20px;
@@ -51,13 +49,17 @@
       max-width: 1400px;
       margin: 0 auto;
       position: relative;
+      animation: containerFadeIn 0.8s ease-out;
     }
-
+    @keyframes containerFadeIn {
+      from { opacity: 0; transform: scale(0.98); }
+      to { opacity: 1; transform: scale(1); }
+    }
     /* Side Panel */
     .side-panel {
       width: 300px;
       min-width: 300px;
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.25);
       backdrop-filter: blur(10px);
       border-radius: 16px;
       padding: 20px;
@@ -65,16 +67,14 @@
       position: sticky;
       top: 20px;
       height: fit-content;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
     }
-
     .panel-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 20px;
     }
-
     .toggle-panel {
       background: none;
       border: none;
@@ -84,29 +84,41 @@
       padding: 5px;
       transition: transform 0.3s ease;
     }
-
+    /* Morning Routine Animation */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .general-morning li {
+      opacity: 0;
+      animation: fadeInUp 0.5s ease forwards;
+    }
+    .general-morning li:nth-child(1) { animation-delay: 0.2s; }
+    .general-morning li:nth-child(2) { animation-delay: 0.4s; }
+    .general-morning li:nth-child(3) { animation-delay: 0.6s; }
+    .general-morning li:nth-child(4) { animation-delay: 0.8s; }
+    .general-morning li:nth-child(5) { animation-delay: 1.0s; }
+    .general-morning li:nth-child(6) { animation-delay: 1.2s; }
     /* Main Content */
     .main-content {
       flex: 1;
       min-width: 0;
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.25);
       backdrop-filter: blur(10px);
       border-radius: 16px;
       padding: 30px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
     }
-
     header {
       text-align: center;
       margin-bottom: 30px;
     }
-
     h1 {
       font-size: 2.5em;
       color: #a94442;
       margin-bottom: 10px;
     }
-
     /* Day Navigation */
     .day-nav {
       display: grid;
@@ -114,85 +126,77 @@
       gap: 15px;
       margin-bottom: 30px;
     }
-
     .dayBtn {
       padding: 15px;
       border-radius: 12px;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.3);
       color: #fff;
       cursor: pointer;
       transition: all 0.3s ease;
       text-align: center;
     }
-
     .dayBtn.active {
-      background: rgba(169, 68, 66, 0.3);
-      border-color: rgba(169, 68, 66, 0.5);
+      background: rgba(169, 68, 66, 0.4);
+      border-color: rgba(169, 68, 66, 0.6);
     }
-
     /* Task Cards */
     .task-cards {
       display: grid;
       gap: 20px;
     }
-
     .timetable {
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255, 255, 255, 0.15);
       padding: 25px;
       border-radius: 16px;
       backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       animation: cardAppear 0.6s ease forwards;
     }
-
     @keyframes cardAppear {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+      from { opacity: 0; transform: translateY(20px) scale(0.95); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
     }
-
     .task {
       padding: 15px;
       margin: 10px 0;
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255, 255, 255, 0.15);
       border-radius: 8px;
       display: flex;
       align-items: center;
-      transition: all 0.3s ease;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
-
     .task.current-task {
-      background: rgba(169, 68, 66, 0.15);
+      background: rgba(169, 68, 66, 0.25);
       border-left: 3px solid #a94442;
     }
-
-    /* Dark Mode */
+    .task:hover {
+      transform: translateX(8px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+    /* Dark Mode Overrides */
     body.dark-mode {
       color: #fff;
       background-color: #121212;
     }
-
     body.dark-mode .side-panel,
     body.dark-mode .main-content {
-      background: rgba(0, 0, 0, 0.3);
+      background: rgba(0, 0, 0, 0.4);
     }
-
     /* Responsive Design */
     @media (max-width: 768px) {
       .container {
         flex-direction: column;
       }
-
       .side-panel {
         width: 100%;
         position: static;
       }
-
       .day-nav {
         grid-template-columns: repeat(3, 1fr);
       }
     }
-    /* Additions/Modifications */
+    /* Header and Social Enhancements */
     .header-top {
       display: flex;
       justify-content: space-between;
@@ -200,7 +204,6 @@
       margin-bottom: 15px;
       position: relative;
     }
-
     .theme-toggle-btn {
       background: none;
       border: none;
@@ -210,11 +213,9 @@
       transition: all 0.3s ease;
       margin-left: auto;
     }
-
     .theme-toggle-btn:hover {
       transform: scale(1.1);
     }
-
     /* Social Icons Styles */
     .social-links {
       display: flex;
@@ -222,7 +223,6 @@
       gap: 15px;
       margin-top: 25px;
     }
-
     .glassIco {
       --width: 45px;
       width: var(--width);
@@ -230,11 +230,9 @@
       color: #fff;
       font-size: 18px;
       border-radius: 8px;
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255, 255, 255, 0.15);
       backdrop-filter: blur(2px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-right-color: rgba(255, 255, 255, 0.1);
-      border-bottom-color: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
       box-shadow: 0 20px 30px rgba(0, 0, 0, 0.1);
       text-decoration: none;
       display: flex;
@@ -244,7 +242,6 @@
       overflow: hidden;
       transition: all 0.3s ease;
     }
-
     .glassIco:before {
       content: "";
       position: absolute;
@@ -255,112 +252,78 @@
       transition: 0.4s;
       transform: skewX(45deg) translateX(calc(var(--width) + 50%));
     }
-
     .glassIco:hover {
       transform: translateY(-5px);
     }
-
     .glassIco:hover:before {
       transform: skewX(45deg) translateX(calc(var(--width) * -1 - 50%));
-    }
-
-    /* Enhanced Animations */
-    .task {
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .task:hover {
-      transform: translateX(8px);
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    }
-
-    @keyframes cardAppear {
-      from { opacity: 0; transform: translateY(20px) scale(0.95); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
     }
     /* Mobile-First Adjustments */
     @media (max-width: 480px) {
       body {
         padding: 10px;
       }
-
       .container {
         gap: 15px;
         width: 100%;
       }
-
       .main-content {
         padding: 20px;
       }
-
       h1 {
         font-size: 1.8em;
         margin-bottom: 8px;
       }
-
       .day-nav {
         grid-template-columns: repeat(2, 1fr);
         gap: 10px;
         margin-bottom: 20px;
       }
-
       .dayBtn {
         padding: 12px;
         font-size: 0.9em;
       }
-
       .task {
         padding: 12px;
         margin: 8px 0;
         font-size: 0.9em;
       }
-
       .side-panel {
         padding: 15px;
       }
-
       .side-panel h3 {
         font-size: 1.1em;
       }
-
       .panel-header {
         margin-bottom: 15px;
       }
-
       #current-time {
         font-size: 0.9em;
         margin-top: 8px;
         display: block;
         text-align: center;
       }
-
       .theme-toggle-btn {
         font-size: 1.3em;
         position: absolute;
         top: 10px;
         right: 10px;
       }
-
       .timetable h2 {
         font-size: 1.2em;
         margin-bottom: 15px;
       }
-
-      /* Disable hover effects on mobile */
       .task:hover {
         transform: none;
       }
     }
-
     @media (max-width: 360px) {
       .day-nav {
         grid-template-columns: 1fr;
       }
-
       .task {
         font-size: 0.85em;
       }
-
       .side-panel {
         padding: 12px;
       }
@@ -369,7 +332,6 @@
       height: 50px;
       overflow: hidden;
     }
-
     .toggle-panel {
       font-size: 1.4em;
       padding: 8px;
@@ -377,7 +339,11 @@
   </style>
 </head>
 <body>
-  <img class="bg-img" src="https://images.pexels.com/photos/2339009/pexels-photo-2339009.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="Background">
+  <img
+    class="bg-img"
+    src="https://images.pexels.com/photos/2339009/pexels-photo-2339009.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+    alt="Background"
+  />
   <div class="overlay"></div>
 
   <div class="container">
@@ -439,97 +405,94 @@
         sidePanel.classList.contains('collapsed') ? '►' : '▼';
     });
 
-    // Day Navigation
+    // Day Navigation and Timetable Data
     const dayButtons = document.querySelectorAll('.dayBtn');
     const taskCards = document.querySelector('.task-cards');
     
-    // Sample timetable data
     const timetables = {
       monday: `<section class="timetable">
                 <h2>Monday Schedule</h2>
                 <ul>
-            <li class="task" data-time="07:00-11:20">7:00 AM – 11:20 AM: Attend school/classes</li>
-            <li class="task" data-time="11:30-12:00">11:30 AM – 12:00 PM: Arrive home/relax briefly</li>
-            <li class="task" data-time="12:00-12:30">12:00 PM – 12:30 PM: Lunch</li>
-            <li class="task" data-time="12:30-14:30">12:30 PM – 2:30 PM: Homework/study session (tackle assignments, review notes)</li>
-            <li class="task" data-time="14:30-15:00">2:30 PM – 3:00 PM: Short break (stretch, relax, or take a walk)</li>
-            <li class="task" data-time="15:00-16:30">3:00 PM – 3:30 PM: Ready for Piano lesson</li>
-            <li class="task" data-time="16:30-17:00">4:30 PM – 5:00 PM: Snack break/Piano teaching</li>
-            <li class="task" data-time="18:15-18:45">6:15 PM - 7:00 PM: Dinner</li>
-            <li class="task" data-time="18:45-20:30">7:30 PM - 9:30 PM: Additional study</li>
-            <li class="task" data-time="20:30-21:00">10:00 PM – 10:30 PM: Break</li>
-            <li class="task" data-time="20:30-21:00">10:45 PM – 11:30 PM: Additional study</li>
-            <li class="task" data-time="23:30-00:00">11:45 PM – 11:55 PM: Routine/Prepare for bed</li>
-            <li class="task" data-time="00:00">12:00 AM – Lights out</li>
+                  <li class="task" data-time="07:00-11:20">07:00 – 11:20: Attend school/classes</li>
+                  <li class="task" data-time="11:30-12:00">11:30 – 12:00: Arrive home/relax briefly</li>
+                  <li class="task" data-time="12:00-12:30">12:00 – 12:30: Lunch</li>
+                  <li class="task" data-time="12:30-14:30">12:30 – 14:30: Homework/study session</li>
+                  <li class="task" data-time="14:30-15:00">14:30 – 15:00: Short break</li>
+                  <li class="task" data-time="15:00-15:30">15:00 – 15:30: Ready for Piano lesson</li>
+                  <li class="task" data-time="16:30-17:00">16:30 – 17:00: Snack break/Piano teaching</li>
+                  <li class="task" data-time="18:15-19:00">18:15 - 19:00: Dinner</li>
+                  <li class="task" data-time="19:30-21:30">19:30 - 21:30: Additional study</li>
+                  <li class="task" data-time="22:00-22:30">22:00 – 22:30: Break</li>
+                  <li class="task" data-time="22:45-23:30">22:45 – 23:30: Additional study</li>
+                  <li class="task" data-time="23:45-23:55">23:45 – 23:55: Routine/Prepare for bed</li>
+                  <li class="task" data-time="00:00">00:00 – Lights out</li>
                 </ul>
               </section>`,
       tuesday: `<section class="timetable">
                 <h2>Tuesday Schedule</h2>
                 <ul>
-            <li class="task" data-time="07:00-21:00">7:00 AM – 9:15 PM: Attend school/classes</li>
-            <li class="task" data-time="21:00-22:30">9:30 - 10:00 PM – Dinner
-            <li class="task" data-time="22:30-23:30">10:15 PM – 11:45 PM Leisure time</li>
-            <li class="task" data-time="23:30-00:00">11:45 PM – 11:55 PM: Routine/Prepare for bed</li>
-            <li class="task" data-time="00:00">12:00 AM – Lights out</li>
+                  <li class="task" data-time="07:00-21:15">07:00 – 21:15: Attend school/classes</li>
+                  <li class="task" data-time="21:30-22:00">21:30 – 22:00: Dinner</li>
+                  <li class="task" data-time="22:15-23:45">22:15 – 23:45: Leisure time</li>
+                  <li class="task" data-time="23:45-23:55">23:45 – 23:55: Routine/Prepare for bed</li>
+                  <li class="task" data-time="00:00">00:00 – Lights out</li>
                 </ul>
               </section>`,
       wednesday: `<section class="timetable">
-                <h2>Wednesday Schedule</h2>
-                <ul>
-            <li class="task" data-time="07:00-11:20">7:00 AM – 11:20 AM: Attend school/classes</li>
-            <li class="task" data-time="11:30-12:00">11:30 AM – 12:00 PM: Arrive home/relax briefly</li>
-            <li class="task" data-time="12:00-12:30">12:00 PM – 12:30 PM: Lunch</li>
-            <li class="task" data-time="12:30-14:30">12:30 PM – 2:30 PM: Homework/study session (tackle assignments, review notes)</li>
-            <li class="task" data-time="14:30-15:00">2:30 PM – 3:00 PM: Short break (stretch, relax, or take a walk)</li>
-            <li class="task" data-time="15:00-16:30">3:00 PM – 4:30 PM: Continue studying or work on longer projects
-            <li class="task" data-time="16:30-17:00">4:30 PM – 5:00 PM: Snack break</li>
-            <li class="task" data-time="18:15-18:45">5:00 PM – 5:45 PM: Exercise Session: (e.g., a workout, run, or gym session)</li>
-            <li class="task" data-time="18:45-20:30">5:45 PM – 6:15 PM: Cool down & shower</li>
-            <li class="task" data-time="20:30-21:00">6:15 PM – 6:45 PM: Dinner</li>
-            <li class="task" data-time="20:30-21:00">6:45 PM – 8:30 PM: Additional study or homework (finish up assignments, prepare for next day)</li>
-            <li class="task" data-time="23:30-00:00">8:30 PM – 9:00 PM: Break (relax, light reading, or unwind)</li>
-            <li class="task" data-time="23:30-00:00">9:00 PM – 10:30 PM: Final study/review session or work on any pending tasks</li>
-            <li class="task" data-time="23:30-00:00">10:30 PM – 11:30 PM: Leisure time (wind down, leisure reading, or light entertainment)</li>
-            <li class="task" data-time="23:30-00:00">11:45 PM – 11:55 PM: Routine/Prepare for bed</li>
-            <li class="task" data-time="23:30-00:00">12:00 AM: Lights out/Bedtime</li>
-                </ul>
-              </section>`,
+                  <h2>Wednesday Schedule</h2>
+                  <ul>
+                    <li class="task" data-time="07:00-11:20">07:00 – 11:20: Attend school/classes</li>
+                    <li class="task" data-time="11:30-12:00">11:30 – 12:00: Arrive home/relax briefly</li>
+                    <li class="task" data-time="12:00-12:30">12:00 – 12:30: Lunch</li>
+                    <li class="task" data-time="12:30-14:30">12:30 – 14:30: Homework/study session</li>
+                    <li class="task" data-time="14:30-15:00">14:30 – 15:00: Short break</li>
+                    <li class="task" data-time="15:00-16:30">15:00 – 16:30: Study or work on projects</li>
+                    <li class="task" data-time="16:30-17:00">16:30 – 17:00: Snack break</li>
+                    <li class="task" data-time="17:00-17:45">17:00 – 17:45: Exercise Session</li>
+                    <li class="task" data-time="17:45-18:15">17:45 – 18:15: Cool down & shower</li>
+                    <li class="task" data-time="18:15-18:45">18:15 – 18:45: Dinner</li>
+                    <li class="task" data-time="18:45-20:30">18:45 – 20:30: Homework/Study</li>
+                    <li class="task" data-time="20:30-21:00">20:30 – 21:00: Break</li>
+                    <li class="task" data-time="21:00-22:30">21:00 – 22:30: Final study/review</li>
+                    <li class="task" data-time="22:30-23:30">22:30 – 23:30: Leisure time</li>
+                    <li class="task" data-time="23:45-23:55">23:45 – 23:55: Routine/Prepare for bed</li>
+                    <li class="task" data-time="00:00">00:00: Lights out</li>
+                  </ul>
+                </section>`,
       thursday: `<section class="timetable">
-                <h2>Thursday Schedule</h2>
-                <ul>
-            <li class="task" data-time="07:00-11:20">7:00 AM – 11:20 AM: Attend school/classes</li>
-            <li class="task" data-time="11:30-12:00">11:30 AM – 12:00 PM: Arrive home/relax briefly</li>
-            <li class="task" data-time="12:00-12:30">12:00 PM – 12:30 PM: Lunch</li>
-            <li class="task" data-time="12:30-14:30">12:30 PM – 2:30 PM: Homework/study session (tackle assignments, review notes)</li>
-            <li class="task" data-time="14:30-15:00">2:30 PM – 3:00 PM: Short break (stretch, relax, or take a walk)</li>
-            <li class="task" data-time="15:00-16:30">3:00 PM – 4:30 PM: Continue studying or work on longer projects
-            <li class="task" data-time="16:30-17:00">4:30 PM – 5:00 PM: Light snack and get ready for extra class (if you need to commute, allow a few extra minutes)</li>
-            <li class="task" data-time="18:15-18:45">5:30 PM – 9:30 PM: (Extra Class Session)</li>
-            <li class="task" data-time="18:45-20:30">9:30 PM – 9:45 PM: Return home/transition</li>
-            <li class="task" data-time="20:30-21:00">9:45 PM – 10:00 PM: Quick dinner or late snack</li>
-            <li class="task" data-time="20:30-21:00">10:00 PM – 11:30 PM: Final review or finish up any remaining homework</li>
-            <li class="task" data-time="23:30-00:00">8:30 PM – 9:00 PM: Break (relax, light reading, or unwind)</li>
-            <li class="task" data-time="23:30-00:00">9:00 PM – 10:30 PM: Final study/review session or work on any pending tasks</li>
-            <li class="task" data-time="23:30-00:00">11:30 PM – 12:00 AM: Wind down, Routine/Prepare for bed</li>
-            <li class="task" data-time="23:30-00:00">12:00 AM: Lights out/Bedtime</li>
-                </ul>
-              </section>`,
+                  <h2>Thursday Schedule</h2>
+                  <ul>
+                    <li class="task" data-time="07:00-11:20">07:00 – 11:20: Attend school/classes</li>
+                    <li class="task" data-time="11:30-12:00">11:30 – 12:00: Arrive home/relax briefly</li>
+                    <li class="task" data-time="12:00-12:30">12:00 – 12:30: Lunch</li>
+                    <li class="task" data-time="12:30-14:30">12:30 – 14:30: Homework/study session</li>
+                    <li class="task" data-time="14:30-15:00">14:30 – 15:00: Short break</li>
+                    <li class="task" data-time="15:00-16:30">15:00 – 16:30: Study or project work</li>
+                    <li class="task" data-time="16:30-17:00">16:30 – 17:00: Light snack & prep for extra class</li>
+                    <li class="task" data-time="17:30-21:30">17:30 – 21:30: Extra Class Session</li>
+                    <li class="task" data-time="21:30-21:45">21:30 – 21:45: Transition/Return home</li>
+                    <li class="task" data-time="21:45-22:00">21:45 – 22:00: Quick dinner/late snack</li>
+                    <li class="task" data-time="22:00-23:30">22:00 – 23:30: Final review/homework</li>
+                    <li class="task" data-time="23:30-00:00">23:30 – 00:00: Wind down/Prepare for bed</li>
+                    <li class="task" data-time="00:00">00:00: Lights out</li>
+                  </ul>
+                </section>`,
       friday: `<section class="timetable">
-                <h2>Friday Schedule</h2>
-                <ul>
-            <li class="task" data-time="07:00-11:20">7:00 AM – 4:55 AM: Attend school/classes</li>
-            <li class="task" data-time="07:00-11:20">5:00 PM – 5:45 PM: Exercise Session: (e.g., a workout, run, or gym session)</li>
-            <li class="task" data-time="18:45-20:30">5:45 PM – 6:15 PM: Cool down & shower</li>
-            <li class="task" data-time="20:30-21:00">6:15 PM – 6:45 PM: Dinner</li>
-            <li class="task" data-time="20:30-21:00">6:45 PM – 8:30 PM: Additional study or homework (finish up assignments, prepare for next day)</li>
-            <li class="task" data-time="23:30-00:00">8:30 PM – 9:00 PM: Break (relax, light reading, or unwind)</li>
-            <li class="task" data-time="23:30-00:00">9:00 PM – 10:30 PM: Final study/review session or work on any pending tasks</li>
-            <li class="task" data-time="23:30-00:00">10:30 PM – 11:30 PM: Leisure time (wind down, leisure reading, or light entertainment)</li>
-            <li class="task" data-time="23:30-00:00">11:45 PM – 11:55 PM: Routine/Prepare for bed</li>
-            <li class="task" data-time="23:30-00:00">12:00 AM: Lights out/Bedtime</li>
-                </ul>
-              </section>`,
-      // Add other days similarly
+                  <h2>Friday Schedule</h2>
+                  <ul>
+                    <li class="task" data-time="07:00-16:55">07:00 – 16:55: Attend school/classes</li>
+                    <li class="task" data-time="17:00-17:45">17:00 – 17:45: Exercise Session</li>
+                    <li class="task" data-time="17:45-18:15">17:45 – 18:15: Cool down & shower</li>
+                    <li class="task" data-time="18:15-18:45">18:15 – 18:45: Dinner</li>
+                    <li class="task" data-time="18:45-20:30">18:45 – 20:30: Homework/Study</li>
+                    <li class="task" data-time="20:30-21:00">20:30 – 21:00: Break</li>
+                    <li class="task" data-time="21:00-22:30">21:00 – 22:30: Final study/review</li>
+                    <li class="task" data-time="22:30-23:30">22:30 – 23:30: Leisure time</li>
+                    <li class="task" data-time="23:45-23:55">23:45 – 23:55: Routine/Prepare for bed</li>
+                    <li class="task" data-time="00:00">00:00: Lights out</li>
+                  </ul>
+                </section>`
+      // Add other days similarly if needed.
     };
 
     dayButtons.forEach(btn => {
@@ -539,36 +502,46 @@
         taskCards.innerHTML = timetables[btn.dataset.day];
       });
     });
-
-    // Initialize with Monday
+    
+    // Initialize with Monday's timetable
     taskCards.innerHTML = timetables.monday;
 
-    // Time Updater
+    // Time Updater with robust time logic
     function updateTime() {
       const now = new Date();
-      const timeString = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+      // Get time in 24-hour format
+      const timeString = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
       document.getElementById('current-time').textContent = `Current Time: ${timeString}`;
       
-      // Update current tasks
+      // Helper function: convert "HH:MM" to minutes since midnight
+      const convertToMinutes = time => {
+        const [hour, minute] = time.split(':').map(Number);
+        return hour * 60 + minute;
+      };
+      
+      const nowMinutes = convertToMinutes(timeString);
+      
+      // Update current tasks based on time range
       document.querySelectorAll('.task').forEach(task => {
-        const [start, end] = task.dataset.time.split('-');
-        task.classList.toggle('current-task', 
-          timeString >= start && timeString <= end
-        );
+        const times = task.dataset.time.split('-');
+        if(times.length === 2) {
+          const startMinutes = convertToMinutes(times[0]);
+          const endMinutes = convertToMinutes(times[1]);
+          task.classList.toggle('current-task', nowMinutes >= startMinutes && nowMinutes < endMinutes);
+        }
       });
     }
 
     setInterval(updateTime, 1000);
     updateTime();
 
-     // Mobile-Specific Enhancements
-    // Auto-collapse side panel on mobile
+    // Mobile-Specific Enhancements: auto-collapse side panel on mobile
     if (window.matchMedia("(max-width: 768px)").matches) {
       document.querySelector('.side-panel').classList.add('collapsed');
       document.querySelector('.toggle-panel').textContent = '►';
     }
 
-    // Better touch targets
+    // Better touch targets for mobile
     document.querySelectorAll('.dayBtn, .task').forEach(element => {
       element.style.touchAction = 'manipulation';
     });
